@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ArduinoRGB-Controller</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="button_lamp_1">1</string>
+    <string name="button_lamp_2">2</string>
+    <string name="button_lamp_3">3</string>
+    <string name="button_lamp_4">4</string>
+
+</resources>
