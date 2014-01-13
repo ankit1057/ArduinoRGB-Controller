@@ -55,39 +55,43 @@
         android:layout_height="0dp"
         android:layout_weight="70" >
 
-        <Button
+        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
             android:onClick="colorPress"
-            android:tag="255-0-0"
-            android:text="RED" />
+            android:src="@drawable/ic_circle_red_64"
+            android:tag="255-0-0" />
 
-        <Button
+        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
+            android:background="@android:color/transparent"
             android:onClick="colorPress"
-            android:tag="255-255-255"
-            android:text="WHITE" />
+            android:src="@drawable/ic_circle_white_64"
+            android:tag="255-255-255" />
 
-        <Button
+        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
+            android:background="@android:color/transparent"
             android:onClick="colorPress"
-            android:tag="0-0-255"
-            android:text="BLUE" />
+            android:src="@drawable/ic_circle_blue_64"
+            android:tag="0-0-255" />
 
-        <Button
+        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
+            android:background="@android:color/transparent"
             android:onClick="colorPress"
-            android:tag="0-255-0"
-            android:text="GREEN" />
+            android:src="@drawable/ic_circle_green_64"
+            android:tag="0-255-0" />
 
         <TextView
             android:id="@+id/debug_1"
@@ -96,7 +100,48 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:text="Null" />
-                
+
+        <ImageButton
+            android:id="@+id/imageButton1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="@android:color/transparent"
+            android:onClick="colorPress"
+            android:src="@drawable/ic_circle_yellow_64"
+            android:tag="255-255-0" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/imageButton1"
+            android:background="@android:color/transparent"
+            android:onClick="colorPress"
+            android:src="@drawable/ic_circle_purple_64"
+            android:tag="255-0-255" />
+
+        <ImageButton
+            android:id="@+id/imageButton2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:background="@android:color/transparent"
+            android:onClick="colorPress"
+            android:src="@drawable/ic_circle_cyan_64"
+            android:tag="0-255-255" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/imageButton2"
+            android:layout_alignParentTop="true"
+            android:background="@android:color/transparent"
+            android:onClick="colorPress"
+            android:src="@drawable/ic_circle_black_64"
+            android:tag="0-0-0" />
     </RelativeLayout>
 
     <LinearLayout
