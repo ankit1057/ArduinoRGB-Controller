@@ -3,6 +3,9 @@ package dk.cmol.arduinorgb_controller;
 import java.util.ArrayList;
 
 public class LampParser {
+	
+	// TODO: 	There is a lot of duplication going on in this class,
+	// 			try to figure out an elegant solution to the problem.
 
 	// Define operations
 	private final int SET = 0;
@@ -51,7 +54,6 @@ public class LampParser {
 
 	// Change color values in the byte array
 	public void addColor(byte[] packet, int offset, String colStr) {
-		// TODO: Try using changeable arguments instead
 		String[] colsStr = colStr.split("-");
 		for (int i = 0; i < 3; i++) {
 			packet[offset + i] = (byte) Integer.parseInt(colsStr[i]);
