@@ -54,7 +54,7 @@ public class LampParser {
 		// TODO: Try using changeable arguments instead
 		String[] colsStr = colStr.split("-");
 		for (int i = 0; i < 3; i++) {
-			packet[offset+i] = (byte) Integer.parseInt(colsStr[i]);
+			packet[offset + i] = (byte) Integer.parseInt(colsStr[i]);
 		}
 	}
 
@@ -83,15 +83,50 @@ public class LampParser {
 			for (int lamp : selectedLamps) {
 				// Set control byte
 				ret[pos] = ctrl(lamp, FADE);
-				
+
 				// Set colors
-				addColor(ret, pos+1, cols);
-				
+				addColor(ret, pos + 1, cols);
+
 				// Set fade
 				ret[pos + 4] = (byte) fadeTime;
-				
+
 				// Go 5 bytes in
 				pos += 5;
+			}
+		}
+
+		return ret;
+
+	}
+
+	// Create the set packet
+	public byte[] set(boolean[] lamps, String cols) {
+		// (Re-)Initialize class
+		init(lamps);
+		byte[] ret;
+
+		if (allLamps) {
+
+			ret = new byte[4];
+			ret[0] = (byte) (ALL | SET); // CTRL byte
+
+			// Set colors
+			addColor(ret, 1, cols);
+		} else {
+			// Array pointer
+			int pos = 0;
+
+			// Initialize the array to
+			ret = new byte[selectedLamps.size() * 4];
+			for (int lamp : selectedLamps) {
+				// Set control byte
+				ret[pos] = ctrl(lamp, SET);
+
+				// Set colors
+				addColor(ret, pos + 1, cols);
+
+				// Go 4 bytes in
+				pos += 4;
 			}
 		}
 
