@@ -9,7 +9,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 
-public class ArduinoRGBActivity extends FragmentActivity {
+public class ArduinoRGBActivity extends FragmentActivity implements SliderFragment.ToolbarListener {
 
 	// Setting vars
 	public boolean lamp_toggle[] = { false, false, false, false };
@@ -75,11 +75,24 @@ public class ArduinoRGBActivity extends FragmentActivity {
 				break;
 			}
 		}
+		
+		if (go) {
+			sock.write(lp.set(lamp_toggle, v.getTag().toString()));
+		}
+	}
+
+	public void seekChange(String colors) {
+		// Check to see if any lamps are toggled on
+		boolean go = false;
+		for (int i = 0; i < lamp_toggle.length; i++) {
+			if (lamp_toggle[i]) {
+				go = true;
+				break;
+			}
+		}
 
 		if (go) {
-
-			sock.write(lp.set(lamp_toggle, v.getTag().toString()));
-
+			sock.write(lp.set(lamp_toggle, colors));
 		}
 	}
 
