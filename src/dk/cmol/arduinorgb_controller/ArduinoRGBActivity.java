@@ -15,12 +15,14 @@ public class ArduinoRGBActivity extends Activity {
 	
 	public boolean lamp_toggle[] = {false,false,false,false};
 	private ArduinoSocket sock = null;
+	private LampParser lp;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_arduino_rgb);
 		sock = new ArduinoSocket(this);
+		lp = new LampParser();
 	}
 
 	@Override
@@ -67,28 +69,7 @@ public class ArduinoRGBActivity extends Activity {
 		
 		if (go) {
 			
-			// Get color value
-			String str_cols[] = v.getTag().toString().split("-");
-			int cols[] = new int[3];
-			for (int i = 0; i < str_cols.length; i++) {
-				cols[i] = Integer.parseInt(str_cols[i]);
-			}
-			
-			// Find out which lamp(s) to light
-			boolean all_lamps = true;
-			for (int i = 0; i < lamp_toggle.length; i++) {
-				if (!lamp_toggle[i]) {
-					all_lamps = false;
-					break;
-				}
-			}
-			
-			int ctrl = 128;
-			
-			byte[] a = {(byte) ctrl,(byte) cols[0],(byte) cols[1],(byte) cols[2]};
-			sock.write(a);
-			
-			tw.setText(str_cols[0]+"-"+str_cols[1]+"-"+str_cols[1]+((all_lamps) ? "TRUE" : "FALSE"));
+			sock.write(lp.fade(lamp_toggle, v.getTag().toString(), 1));
 			
 		}
 	}
