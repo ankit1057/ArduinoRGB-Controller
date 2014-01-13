@@ -54,7 +54,7 @@ public class ArduinoSocket {
 	private void getPreferences() {
 		// TODO: Read prefs from key-stor values
 		Log.i("ArduinoSocket", "Setting IP and PORT");
-		ip = "172.16.0.26";
+		ip = "172.16.0.5";
 		port = 2000;
 	}
 	
