@@ -1,7 +1,5 @@
 package dk.cmol.arduinorgb_controller;
 
-import java.util.Arrays;
-
 import android.os.Bundle;
 import android.app.Activity;
 import android.graphics.Color;
@@ -69,7 +67,7 @@ public class ArduinoRGBActivity extends Activity {
 		
 		if (go) {
 			
-			sock.write(lp.fade(lamp_toggle, v.getTag().toString(), 1));
+			sock.write(lp.set(lamp_toggle, v.getTag().toString()));
 			
 		}
 	}
