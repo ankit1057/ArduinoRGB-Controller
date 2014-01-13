@@ -1,61 +1,72 @@
 package dk.cmol.arduinorgb_controller;
 
-import android.os.Bundle;
-import android.app.Activity;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
-import android.graphics.PorterDuff;
 
-public class ArduinoRGBActivity extends Activity {
-	
-	public boolean lamp_toggle[] = {false,false,false,false};
+public class ArduinoRGBActivity extends FragmentActivity {
+
+	// Setting vars
+	public boolean lamp_toggle[] = { false, false, false, false };
 	private ArduinoSocket sock = null;
 	private LampParser lp;
+
+	// This is were all the grim menu stuff begins
+	MenuPagerAdapter mSectionsPagerAdapter;
+	ViewPager mViewPager;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_arduino_rgb);
-		sock = new ArduinoSocket(this);
+		setContentView(R.layout.activity_main);
+
+		// Create the adapter that will return a fragment for each of the three
+		// primary sections of the app.
+		mSectionsPagerAdapter = new MenuPagerAdapter(
+				getSupportFragmentManager());
+
+		// Set up the ViewPager with the sections adapter.
+		mViewPager = (ViewPager) findViewById(R.id.pager);
+		mViewPager.setAdapter(mSectionsPagerAdapter);
+
+		// Create the parser and the socket
 		lp = new LampParser();
+		sock = new ArduinoSocket(this);
+
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.arduino_rgb, menu);
+		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
-	
-	
+
 	// Toggle lamp sequence
 	public void toggleLamp(View v) {
 		Button button = (Button) v;
 		int pos = Integer.parseInt(button.getText().toString()) - 1;
-		
+
 		if (lamp_toggle[pos]) {
-			button.getBackground().setColorFilter(Color.LTGRAY, PorterDuff.Mode.MULTIPLY);
+			button.getBackground().setColorFilter(Color.LTGRAY,
+					PorterDuff.Mode.MULTIPLY);
+		} else {
+			button.getBackground().setColorFilter(Color.GREEN,
+					PorterDuff.Mode.MULTIPLY);
 		}
-		else {
-			button.getBackground().setColorFilter(Color.GREEN, PorterDuff.Mode.MULTIPLY);
-		}
-		
+
 		// Change value of button
 		lamp_toggle[pos] = !lamp_toggle[pos];
-		
-		TextView tw = (TextView) findViewById(R.id.debug_1);
-		tw.setText(lamp_toggle[pos] ? "TRUE" : "FALSE");
-		
 	}
-	
+
 	// React to a pressed color
 	public void colorPress(View v) {
-		
-		TextView tw = (TextView) findViewById(R.id.debug_1);
-		
+
 		// Check to see if any lamps are toggled on
 		boolean go = false;
 		for (int i = 0; i < lamp_toggle.length; i++) {
@@ -64,11 +75,11 @@ public class ArduinoRGBActivity extends Activity {
 				break;
 			}
 		}
-		
+
 		if (go) {
-			
+
 			sock.write(lp.set(lamp_toggle, v.getTag().toString()));
-			
+
 		}
 	}
 
