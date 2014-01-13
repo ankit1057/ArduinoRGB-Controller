@@ -7,7 +7,7 @@ public class LampParser {
 	// Define operations
 	private final int SET = 0;
 	private final int FADE = 1;
-	
+
 	private final int ALL = 128;
 
 	boolean allLamps;
@@ -31,9 +31,9 @@ public class LampParser {
 				break;
 			}
 		}
-		
+
 		// Build array list with lamps
-		if(!allLamps) {
+		if (!allLamps) {
 			selectedLamps = new ArrayList<Integer>();
 			for (int i = 0; i < lamps.length; i++) {
 				if (lamps[i]) {
@@ -41,14 +41,14 @@ public class LampParser {
 				}
 			}
 		}
-		
+
 	}
 
 	// Create control byte, use on a per lamp basis
 	public byte ctrl(int lamp, int mode) {
 		return (byte) ((lamp << 5) | mode);
 	}
-	
+
 	// Generate a byte array from the color string
 	public byte[] col(String colStr) {
 		// TODO: Try using changeable arguments instead
@@ -57,9 +57,18 @@ public class LampParser {
 		for (int i = 0; i < 3; i++) {
 			cols[i] = Integer.parseInt(colsStr[i]);
 		}
-		
-		byte[] color = {(byte) cols[0], (byte) cols[1], (byte) cols[2]};
+
+		byte[] color = { (byte) cols[0], (byte) cols[1], (byte) cols[2] };
 		return color;
+	}
+
+	// Change color values in the byte array
+	public void addColor(byte[] packet, int offset, String colStr) {
+		// TODO: Try using changeable arguments instead
+		String[] colsStr = colStr.split("-");
+		for (int i = 0; i < 3; i++) {
+			packet[offset+i] = (byte) Integer.parseInt(colsStr[i]);
+		}
 	}
 
 	// Create the fade packet
@@ -67,40 +76,38 @@ public class LampParser {
 		// (Re-)Initialize class
 		init(lamps);
 		byte[] ret;
-		
+
 		if (allLamps) {
-			byte[] color = col(cols); // TODO: Better names
-			
+
 			ret = new byte[5];
 			ret[0] = (byte) (ALL | FADE); // CTRL byte
-			
+
 			// Set colors
-			// TODO: Figure out if you can do something smarter than this
-			ret[1] = color[0];
-			ret[2] = color[1];
-			ret[3] = color[2];
-			
+			addColor(ret, 1, cols);
+
 			// Set fadeTime
 			ret[4] = (byte) fadeTime;
-		}
-		else {
+		} else {
 			// Array pointer
 			int pos = 0;
-			
-			byte[] color = col(cols); // TODO: Better names
-			
-			// Initialize the array to 
-			ret = new byte[selectedLamps.size()*5];
+
+			// Initialize the array to
+			ret = new byte[selectedLamps.size() * 5];
 			for (int lamp : selectedLamps) {
-				ret[pos] 	= ctrl(lamp, FADE);
-				ret[pos+1]	= color[0];
-				ret[pos+2]	= color[1];
-				ret[pos+3]	= color[2];
-				ret[pos+4] = (byte) fadeTime;
+				// Set control byte
+				ret[pos] = ctrl(lamp, FADE);
+				
+				// Set colors
+				addColor(ret, pos+1, cols);
+				
+				// Set fade
+				ret[pos + 4] = (byte) fadeTime;
+				
+				// Go 5 bytes in
 				pos += 5;
 			}
 		}
-		
+
 		return ret;
 
 	}
