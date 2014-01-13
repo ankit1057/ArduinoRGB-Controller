@@ -49,19 +49,6 @@ public class LampParser {
 		return (byte) ((lamp << 5) | mode);
 	}
 
-	// Generate a byte array from the color string
-	public byte[] col(String colStr) {
-		// TODO: Try using changeable arguments instead
-		String[] colsStr = colStr.split("-");
-		int cols[] = new int[3];
-		for (int i = 0; i < 3; i++) {
-			cols[i] = Integer.parseInt(colsStr[i]);
-		}
-
-		byte[] color = { (byte) cols[0], (byte) cols[1], (byte) cols[2] };
-		return color;
-	}
-
 	// Change color values in the byte array
 	public void addColor(byte[] packet, int offset, String colStr) {
 		// TODO: Try using changeable arguments instead
