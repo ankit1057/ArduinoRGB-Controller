@@ -60,28 +60,31 @@
         android:layout_weight="70" >
 
         <SeekBar
-            android:id="@+id/seekBar1"
+            android:id="@+id/seekBarR"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="78dp" />
+            android:layout_marginTop="78dp"
+            android:max="51" />
 
         <SeekBar
-            android:id="@+id/seekBar2"
+            android:id="@+id/seekBarG"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/seekBar1"
-            android:layout_marginTop="60dp" />
+            android:layout_below="@+id/seekBarR"
+            android:layout_marginTop="60dp"
+            android:max="51" />
 
         <SeekBar
-            android:id="@+id/seekBar3"
+            android:id="@+id/seekBarB"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/seekBar2"
-            android:layout_marginTop="60dp" />
+            android:layout_below="@+id/seekBarG"
+            android:layout_marginTop="60dp"
+            android:max="51" />
         
     </RelativeLayout>
 
