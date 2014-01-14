@@ -16,5 +16,4 @@ public class ColorDotsFragment extends Fragment {
 
 		return rootView;
 	}
-
 }
