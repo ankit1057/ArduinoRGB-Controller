@@ -4,8 +4,9 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
 
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
-
 
 public class ArduinoSocket {
 	
@@ -52,10 +53,11 @@ public class ArduinoSocket {
 	}
 	
 	private void getPreferences() {
-		// TODO: Read prefs from key-stor values
+		// Read settings from settings manager
 		Log.i("ArduinoSocket", "Setting IP and PORT");
-		ip = "172.16.0.5";
-		port = 2000;
+		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(parent);
+		ip = sharedPref.getString("server_addr", "");
+		port = Integer.parseInt(sharedPref.getString("server_port", ""));
 	}
 	
 	public void close() {
