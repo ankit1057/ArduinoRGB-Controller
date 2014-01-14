@@ -24,26 +24,6 @@ public class ArduinoSocket extends Thread{
 		this.parent = parent;
 	}
 	
-	public void write(final byte[] buffer) {
-		
-		Thread thread = new Thread(new Runnable(){
-		    @Override
-		    public void run() {
-		    	connect();
-				try {
-					stream.write(buffer);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					Log.e("ArduinoSocket", e.getMessage());
-					e.printStackTrace();
-				}
-				close();
-		    }
-		});
-
-		thread.start();
-	}
-	
 	public void run() {
 		connect();
 		

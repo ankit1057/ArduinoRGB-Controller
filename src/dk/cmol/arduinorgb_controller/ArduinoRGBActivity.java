@@ -82,7 +82,6 @@ public class ArduinoRGBActivity extends FragmentActivity implements
 
 		if (go) {
 			sock.writeMessage(lp.set(lamp_toggle, v.getTag().toString()));
-			//sock.write(lp.set(lamp_toggle, v.getTag().toString()));
 		}
 	}
 
@@ -97,7 +96,7 @@ public class ArduinoRGBActivity extends FragmentActivity implements
 		}
 
 		if (go) {
-			sock.write(lp.set(lamp_toggle, colors));
+			sock.writeMessage(lp.set(lamp_toggle, colors));
 		}
 	}
 
