@@ -6,6 +6,7 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,7 +42,25 @@ public class ArduinoRGBActivity extends FragmentActivity implements
 		lp = new LampParser();
 		sock = new ArduinoSocket(this);
 		sock.start();
-
+	}
+	
+	@Override
+	public void onPause() {
+	    super.onPause();
+	    Log.i("ArduinoRGBActivity", "PAUSE: closing socket");
+	    sock.mHandler = null;
+	    sock.close();
+	    sock = null;
+	}
+	
+	@Override
+	public void onResume() {
+	    super.onPause();
+	    if (sock == null) {
+	    	Log.i("ArduinoRGBActivity", "RESUME: Opening socket");
+	    	sock = new ArduinoSocket(this);
+		    sock.start();
+		}
 	}
 
 	@Override
