@@ -1,15 +1,18 @@
 package dk.cmol.arduinorgb_controller;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-public class ArduinoRGBActivity extends FragmentActivity implements SliderFragment.ToolbarListener {
+public class ArduinoRGBActivity extends FragmentActivity implements
+		SliderFragment.ToolbarListener, android.widget.PopupMenu.OnMenuItemClickListener {
 
 	// Setting vars
 	public boolean lamp_toggle[] = { false, false, false, false };
@@ -75,7 +78,7 @@ public class ArduinoRGBActivity extends FragmentActivity implements SliderFragme
 				break;
 			}
 		}
-		
+
 		if (go) {
 			sock.write(lp.set(lamp_toggle, v.getTag().toString()));
 		}
@@ -96,4 +99,10 @@ public class ArduinoRGBActivity extends FragmentActivity implements SliderFragme
 		}
 	}
 
+	@Override
+	public boolean onMenuItemClick(MenuItem item) {
+		Intent intent = new Intent(this, SettingsActivity.class);
+		startActivity(intent);
+		return false;
+	}
 }
