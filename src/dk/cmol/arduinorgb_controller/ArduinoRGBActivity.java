@@ -11,9 +11,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.NumberPicker;
+import android.widget.Toast;
 
 public class ArduinoRGBActivity extends FragmentActivity implements
-		SliderFragment.ToolbarListener, android.widget.PopupMenu.OnMenuItemClickListener {
+		SliderFragment.ToolbarListener,
+		android.widget.PopupMenu.OnMenuItemClickListener {
 
 	// Setting vars
 	public boolean lamp_toggle[] = { false, false, false, false };
@@ -43,23 +47,23 @@ public class ArduinoRGBActivity extends FragmentActivity implements
 		sock = new ArduinoSocket(this);
 		sock.start();
 	}
-	
+
 	@Override
 	public void onPause() {
-	    super.onPause();
-	    Log.i("ArduinoRGBActivity", "PAUSE: closing socket");
-	    sock.mHandler = null;
-	    sock.close();
-	    sock = null;
+		super.onPause();
+		Log.i("ArduinoRGBActivity", "PAUSE: closing socket");
+		sock.mHandler = null;
+		sock.close();
+		sock = null;
 	}
-	
+
 	@Override
 	public void onResume() {
-	    super.onPause();
-	    if (sock == null) {
-	    	Log.i("ArduinoRGBActivity", "RESUME: Opening socket");
-	    	sock = new ArduinoSocket(this);
-		    sock.start();
+		super.onPause();
+		if (sock == null) {
+			Log.i("ArduinoRGBActivity", "RESUME: Opening socket");
+			sock = new ArduinoSocket(this);
+			sock.start();
 		}
 	}
 
@@ -89,34 +93,42 @@ public class ArduinoRGBActivity extends FragmentActivity implements
 
 	// React to a pressed color
 	public void colorPress(View v) {
-
-		// Check to see if any lamps are toggled on
-		boolean go = false;
-		for (int i = 0; i < lamp_toggle.length; i++) {
-			if (lamp_toggle[i]) {
-				go = true;
-				break;
-			}
-		}
-
-		if (go) {
+		if (testLamps()) {
 			sock.writeMessage(lp.set(lamp_toggle, v.getTag().toString()));
 		}
 	}
 
 	public void seekChange(String colors) {
-		// Check to see if any lamps are toggled on
-		boolean go = false;
-		for (int i = 0; i < lamp_toggle.length; i++) {
-			if (lamp_toggle[i]) {
-				go = true;
-				break;
-			}
-		}
-
-		if (go) {
+		if (testLamps()) {
 			sock.writeMessage(lp.set(lamp_toggle, colors));
 		}
+	}
+	
+	public void fade(View v) {
+		if (testLamps()) {
+			String cols = 	Integer.toString(((NumberPicker)findViewById(R.id.numberPicker1)).getValue())+"-"
+							+Integer.toString(((NumberPicker)findViewById(R.id.numberPicker2)).getValue())+"-"
+							+Integer.toString(((NumberPicker)findViewById(R.id.numberPicker3)).getValue());
+			EditText ed = (EditText) findViewById(R.id.fadeField);
+			try {
+				int fade = Integer.parseInt(ed.getText().toString());
+				fade = fade == 10 ? 11 : fade;
+				sock.writeMessage(lp.fade(lamp_toggle, cols, fade));
+			} catch (NumberFormatException e) {
+				Toast toast = Toast.makeText(getApplicationContext(), "Input fade time", Toast.LENGTH_SHORT);
+				toast.show();
+			}
+			
+		}
+	}
+	
+	public boolean testLamps() {
+		for (int i = 0; i < lamp_toggle.length; i++) {
+			if (lamp_toggle[i]) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override
