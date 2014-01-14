@@ -10,6 +10,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.widget.Toast;
 
 public class ArduinoSocket extends Thread{
 	
@@ -25,18 +26,19 @@ public class ArduinoSocket extends Thread{
 	}
 	
 	public void run() {
-		connect();
 		
 		Looper.prepare();
+		connect();
 
         mHandler = new Handler() {
                 public void handleMessage(Message msg) {
                     try {
-						stream.write((byte[]) msg.obj);
+                    	stream.write((byte[]) msg.obj);
 						stream.write((byte) 10);
+						Log.i("ArduinoSocket", "Data written...");
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						Toast toast = Toast.makeText(parent.getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT);
+						toast.show();
 					}
                 }
         };
@@ -55,9 +57,9 @@ public class ArduinoSocket extends Thread{
 			sock = new Socket(ip, port);
 			stream = sock.getOutputStream();
 		} catch (IOException e) {
-			// TODO: Write error to parent view
 			e.printStackTrace();
-			Log.e("ArduinoSocket", e.getMessage());
+			Toast toast = Toast.makeText(parent.getApplicationContext(), "Failed to connect :-(", Toast.LENGTH_LONG);
+			toast.show();
 		}
 	}
 	
@@ -65,8 +67,15 @@ public class ArduinoSocket extends Thread{
 		// Read settings from settings manager
 		Log.i("ArduinoSocket", "Setting IP and PORT");
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(parent);
-		ip = sharedPref.getString("server_addr", "");
-		port = Integer.parseInt(sharedPref.getString("server_port", ""));
+		try {
+			ip = sharedPref.getString("server_addr", "");
+			port = Integer.parseInt(sharedPref.getString("server_port", ""));
+		} catch (Exception e) {
+			Log.w("ArduinoSocket", "Failed setting IP and PORT");
+			Toast toast = Toast.makeText(parent.getApplicationContext(), "Please input settings", Toast.LENGTH_LONG);
+			toast.show();
+		}
+		
 	}
 	
 	public void close() {
@@ -74,8 +83,8 @@ public class ArduinoSocket extends Thread{
 			sock.close();
 		} catch (IOException e) {
 			// TODO Write error to parent view
-			e.printStackTrace();
-			Log.e("ArduinoSocket", e.getMessage());
+			//e.printStackTrace();
+			//Log.e("ArduinoSocket", e.getMessage());
 		}
 	}
 
