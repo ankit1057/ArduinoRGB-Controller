@@ -40,6 +40,7 @@ public class ArduinoRGBActivity extends FragmentActivity implements
 		// Create the parser and the socket
 		lp = new LampParser();
 		sock = new ArduinoSocket(this);
+		sock.start();
 
 	}
 
@@ -80,7 +81,8 @@ public class ArduinoRGBActivity extends FragmentActivity implements
 		}
 
 		if (go) {
-			sock.write(lp.set(lamp_toggle, v.getTag().toString()));
+			sock.writeMessage(lp.set(lamp_toggle, v.getTag().toString()));
+			//sock.write(lp.set(lamp_toggle, v.getTag().toString()));
 		}
 	}
 
