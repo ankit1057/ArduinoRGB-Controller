@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <EditTextPreference
-        android:defaultValue="192.168.0.1"
+        android:defaultValue="172.16.0.5"
         android:summary="The address of the server"
         android:inputType="textCapWords"
         android:key="server_addr"
@@ -13,7 +13,7 @@
     <EditTextPreference
         android:defaultValue="2000"
         android:summary="The port of the server"
-        android:inputType="textCapWords"
+        android:inputType="number"
         android:key="server_port"
         android:maxLines="1"
         android:selectAllOnFocus="true"
