@@ -27,6 +27,9 @@ public class MenuPagerAdapter extends FragmentPagerAdapter {
 		case 2:
 			fragment = new FaderFragment();
 			break;
+		case 3:
+			fragment = new GyroFragment();
+			break;
 		default:
 			fragment = new ColorDotsFragment();
 			break;
@@ -38,7 +41,7 @@ public class MenuPagerAdapter extends FragmentPagerAdapter {
 	@Override
 	public int getCount() {
 		// Show 3 total pages.
-		return 3; 
+		return 4; 
 	}
 
 	@Override
@@ -50,6 +53,8 @@ public class MenuPagerAdapter extends FragmentPagerAdapter {
 			return "Slider";
 		case 2:
 			return "Fader";
+		case 3:
+			return "Gyro";
 		}
 		return null;
 	}
