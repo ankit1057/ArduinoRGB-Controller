@@ -12,6 +12,11 @@ public class LampParser {
 	private final int FADE = 1;
 
 	private final int ALL = 128;
+	
+	/* Right now all messages are split at the byte (00001010).
+	   Consider splitting at 254 (11111110) as this has a smaller
+	   implication on the messages. */
+	private final int BREAK = 10;
 
 	boolean allLamps;
 	ArrayList<Integer> selectedLamps;
@@ -56,7 +61,9 @@ public class LampParser {
 	public void addColor(byte[] packet, int offset, String colStr) {
 		String[] colsStr = colStr.split("-");
 		for (int i = 0; i < 3; i++) {
-			packet[offset + i] = (byte) Integer.parseInt(colsStr[i]);
+			int col = Integer.parseInt(colsStr[i]);
+			// Add 1 to colors representing BREAK
+			packet[offset + i] = (byte) (col == BREAK ? col+1 : col);
 		}
 	}
 
