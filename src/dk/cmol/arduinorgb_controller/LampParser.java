@@ -15,7 +15,9 @@ public class LampParser {
 	
 	/* Right now all messages are split at the byte (00001010).
 	   Consider splitting at 254 (11111110) as this has a smaller
-	   implication on the messages. */
+	   implication on the messages, or creating a server that
+	   does not care about breaks and just puts out the bytes
+	   it receives. */
 	private final int BREAK = 10;
 
 	boolean allLamps;
@@ -81,8 +83,8 @@ public class LampParser {
 			// Set colors
 			addColor(ret, 1, cols);
 
-			// Set fadeTime
-			ret[4] = (byte) fadeTime;
+			// Set fadeTime, and escape BREAK
+			ret[4] = (byte) (fadeTime == BREAK ? fadeTime+1 : fadeTime);
 		} else {
 			// Array pointer
 			int pos = 0;
