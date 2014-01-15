@@ -50,7 +50,7 @@ public class SliderFragment extends Fragment implements OnSeekBarChangeListener 
 			boolean fromUser) {
 		String cols = Integer.toString(((SeekBar)getActivity().findViewById(R.id.seekBarR)).getProgress()*5)+"-";
 		cols += Integer.toString(((SeekBar)getActivity().findViewById(R.id.seekBarG)).getProgress()*5)+"-";
-		cols += Integer.toString(((SeekBar)getActivity().findViewById(R.id.seekBarR)).getProgress()*5);
+		cols += Integer.toString(((SeekBar)getActivity().findViewById(R.id.seekBarB)).getProgress()*5);
 		activityCallback.seekChange(cols);
 	}
 
