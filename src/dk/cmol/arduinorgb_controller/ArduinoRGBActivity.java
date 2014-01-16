@@ -52,7 +52,6 @@ public class ArduinoRGBActivity extends FragmentActivity implements
 	public void onPause() {
 		super.onPause();
 		Log.i("ArduinoRGBActivity", "PAUSE: closing socket");
-		sock.mHandler = null;
 		sock.close();
 		sock = null;
 	}
@@ -112,7 +111,6 @@ public class ArduinoRGBActivity extends FragmentActivity implements
 			EditText ed = (EditText) findViewById(R.id.fadeField);
 			try {
 				int fade = Integer.parseInt(ed.getText().toString());
-				fade = fade == 10 ? 11 : fade;
 				sock.writeMessage(lp.fade(lamp_toggle, cols, fade));
 			} catch (NumberFormatException e) {
 				Toast toast = Toast.makeText(getApplicationContext(), "Input fade time", Toast.LENGTH_SHORT);
@@ -128,6 +126,8 @@ public class ArduinoRGBActivity extends FragmentActivity implements
 				return true;
 			}
 		}
+		Toast toast = Toast.makeText(getApplicationContext(), "Pssst.. Select some lamps..", Toast.LENGTH_SHORT);
+		toast.show();
 		return false;
 	}
 
