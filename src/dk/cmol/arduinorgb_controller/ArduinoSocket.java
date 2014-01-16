@@ -19,7 +19,7 @@ public class ArduinoSocket extends Thread{
 	private OutputStream stream = null;
 	private String ip = null;
 	private int port;
-	public Handler mHandler;
+	private Handler mHandler;
 	
 	public ArduinoSocket(ArduinoRGBActivity parent) {
 		this.parent = parent;
@@ -33,9 +33,14 @@ public class ArduinoSocket extends Thread{
         mHandler = new Handler() {
                 public void handleMessage(Message msg) {
                     try {
-                    	stream.write((byte[]) msg.obj);
-						stream.write((byte) 10);
-						Log.i("ArduinoSocket", "Data written...");
+                    	if (stream != null) {
+                    		stream.write((byte[]) msg.obj);
+    						stream.write((byte) 10);
+    						Log.i("ArduinoSocket", "Data written...");
+						}
+                    	else {
+							throw new IOException("Sorry, phone not connected :-(\nPlase check your settings!");
+						}
 					} catch (IOException e) {
 						Toast toast = Toast.makeText(parent.getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT);
 						toast.show();
@@ -57,8 +62,8 @@ public class ArduinoSocket extends Thread{
 			sock = new Socket(ip, port);
 			stream = sock.getOutputStream();
 		} catch (IOException e) {
-			e.printStackTrace();
-			Toast toast = Toast.makeText(parent.getApplicationContext(), "Failed to connect :-(", Toast.LENGTH_LONG);
+			//e.printStackTrace();
+			Toast toast = Toast.makeText(parent.getApplicationContext(), "Failed to connect :-(\nPlase check your settings!", Toast.LENGTH_LONG);
 			toast.show();
 		}
 	}
@@ -80,7 +85,10 @@ public class ArduinoSocket extends Thread{
 	
 	public void close() {
 		try {
-			sock.close();
+			mHandler = null;
+			if (sock != null) {
+				sock.close();
+			}
 		} catch (IOException e) {
 			// TODO Write error to parent view
 			//e.printStackTrace();
