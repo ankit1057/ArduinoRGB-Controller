@@ -13,8 +13,6 @@ public class MenuPagerAdapter extends FragmentPagerAdapter {
 	@Override
 	public Fragment getItem(int position) {
 		// getItem is called to instantiate the fragment for the given page.
-		// Return a DummySectionFragment (defined as a static inner class
-		// below) with the page number as its lone argument.
 		Fragment fragment;
 		
 		switch (position) {
