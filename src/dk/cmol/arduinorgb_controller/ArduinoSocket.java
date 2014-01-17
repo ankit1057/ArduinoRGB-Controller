@@ -2,6 +2,7 @@ package dk.cmol.arduinorgb_controller;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 
 import android.content.SharedPreferences;
@@ -20,6 +21,8 @@ public class ArduinoSocket extends Thread{
 	private String ip = null;
 	private int port;
 	private Handler mHandler;
+	private int timeout = 1000;
+	private boolean connected;
 	
 	public ArduinoSocket(ArduinoRGBActivity parent) {
 		this.parent = parent;
@@ -51,20 +54,34 @@ public class ArduinoSocket extends Thread{
 	}
 	
 	public void writeMessage(final byte[] message) {
-		Message msg = Message.obtain();
-		msg.obj = message;
-		mHandler.sendMessage(msg);
+		if (connected) {
+			Message msg = Message.obtain();
+			msg.obj = message;
+			mHandler.sendMessage(msg);
+		} else {
+			Log.w("ArduinoSocket", "Trying to send data without connection");
+			Toast toast = Toast.makeText(parent.getApplicationContext(), "Sorry, phone not connected :-(\nPlase check your settings!", Toast.LENGTH_SHORT);
+			toast.show();
+		}
 	}
 	
 	private void connect() {
 		getPreferences();
 		try {
-			sock = new Socket(ip, port);
+			sock = new Socket();
+			sock.connect(new InetSocketAddress(ip, port), timeout);
 			stream = sock.getOutputStream();
+			
+			if(sock == null) {
+				throw new IOException();
+			}
+			connected = true;
 		} catch (IOException e) {
 			//e.printStackTrace();
+			Log.w("ArduinoSocket", "Unable to connect");
 			Toast toast = Toast.makeText(parent.getApplicationContext(), "Failed to connect :-(\nPlase check your settings!", Toast.LENGTH_LONG);
 			toast.show();
+			connected = false;
 		}
 	}
 	
@@ -92,7 +109,7 @@ public class ArduinoSocket extends Thread{
 		} catch (IOException e) {
 			// TODO Write error to parent view
 			//e.printStackTrace();
-			//Log.e("ArduinoSocket", e.getMessage());
+			Log.e("ArduinoSocket", e.getMessage());
 		}
 	}
 
