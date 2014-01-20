@@ -38,7 +38,7 @@ public class MenuPagerAdapter extends FragmentPagerAdapter {
 
 	@Override
 	public int getCount() {
-		// Show 3 total pages.
+		// Show total pages.
 		return 4; 
 	}
 

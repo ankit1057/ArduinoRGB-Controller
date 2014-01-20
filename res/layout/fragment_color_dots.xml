@@ -8,8 +8,9 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".ArduinoRGBActivity$ColorDotsFragment" >
-    
+
     <LinearLayout
+        style="?android:attr/buttonBarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -17,135 +18,258 @@
         android:paddingBottom="0dp"
         android:paddingLeft="0dp"
         android:paddingRight="0dp"
-        android:paddingTop="0dp"
-        style="?android:attr/buttonBarStyle" >
-        
+        android:paddingTop="0dp" >
+
         <Button
             android:id="@+id/lamp1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/button_lamp_1"
-            android:onClick="toggleLamp"/>
-        
+            android:onClick="toggleLamp"
+            android:text="@string/button_lamp_1" />
+
         <Button
             android:id="@+id/lamp2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/button_lamp_2"
-            android:onClick="toggleLamp" />
-        
+            android:onClick="toggleLamp"
+            android:text="@string/button_lamp_2" />
+
         <Button
             android:id="@+id/lamp3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/button_lamp_3"
-            android:onClick="toggleLamp" />
-        
+            android:onClick="toggleLamp"
+            android:text="@string/button_lamp_3" />
+
         <Button
             android:id="@+id/lamp4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/button_lamp_4"
-            android:onClick="toggleLamp" />
-        
+            android:onClick="toggleLamp"
+            android:text="@string/button_lamp_4" />
     </LinearLayout>
-    
-    <RelativeLayout
+
+    <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="100" >
+        android:layout_height="wrap_content"
+        android:layout_weight="100"
+        android:paddingTop="10dp" >
 
-        <ImageButton
-            android:layout_width="wrap_content"
+        <TableRow
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:onClick="colorPress"
-            android:src="@drawable/ic_circle_red_64"
-            android:tag="255-0-0" />
+            android:paddingBottom="20dp" >
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:background="@android:color/transparent"
-            android:onClick="colorPress"
-            android:src="@drawable/ic_circle_white_64"
-            android:tag="255-255-255" />
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:onClick="colorPress"
+                android:src="@drawable/ic_rounded_square_red_100"
+                android:tag="255-0-0" />
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:background="@android:color/transparent"
-            android:onClick="colorPress"
-            android:src="@drawable/ic_circle_blue_64"
-            android:tag="0-0-255" />
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:onClick="colorPress"
+                android:src="@drawable/ic_rounded_square_white_100"
+                android:tag="255-255-255" />
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:background="@android:color/transparent"
-            android:onClick="colorPress"
-            android:src="@drawable/ic_circle_green_64"
-            android:tag="0-255-0" />
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:onClick="colorPress"
+                android:src="@drawable/ic_rounded_square_blue_100"
+                android:tag="0-0-255" />
 
-        <TextView
-            android:id="@+id/debug_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="Null" />
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:onClick="colorPress"
+                android:src="@drawable/ic_rounded_square_green_100"
+                android:tag="0-255-0" />
+        </TableRow>
 
-        <ImageButton
-            android:id="@+id/imageButton1"
-            android:layout_width="wrap_content"
+        <TableRow
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:background="@android:color/transparent"
-            android:onClick="colorPress"
-            android:src="@drawable/ic_circle_yellow_64"
-            android:tag="255-255-0" />
+            android:paddingBottom="20dp" >
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignTop="@+id/imageButton1"
-            android:background="@android:color/transparent"
-            android:onClick="colorPress"
-            android:src="@drawable/ic_circle_purple_64"
-            android:tag="255-0-255" />
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:onClick="colorPress"
+                android:src="@drawable/ic_rounded_square_yellow_100"
+                android:tag="255-255-0" />
 
-        <ImageButton
-            android:id="@+id/imageButton2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:background="@android:color/transparent"
-            android:onClick="colorPress"
-            android:src="@drawable/ic_circle_cyan_64"
-            android:tag="0-255-255" />
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:onClick="colorPress"
+                android:src="@drawable/ic_rounded_square_purple_100"
+                android:tag="255-0-255" />
 
-        <ImageButton
-            android:layout_width="wrap_content"
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:onClick="colorPress"
+                android:src="@drawable/ic_rounded_square_cyan_100"
+                android:tag="0-255-255" />
+
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:onClick="colorPress"
+                android:src="@drawable/ic_rounded_square_black_100"
+                android:tag="0-0-0" />
+        </TableRow>
+        
+        <TableRow
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/imageButton2"
-            android:layout_alignParentTop="true"
-            android:background="@android:color/transparent"
-            android:onClick="colorPress"
-            android:src="@drawable/ic_circle_black_64"
-            android:tag="0-0-0" />
-    </RelativeLayout>
+            android:paddingBottom="20dp" >
+
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:onClick="colorPress"
+                android:src="@drawable/ic_rounded_square_sun_100"
+                android:tag="255-125-30" />
+
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:onClick="colorPress"
+                android:src="@drawable/ic_rounded_square_aquamarine_100"
+                android:tag="127-255-212" />
+
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:onClick="colorPress"
+                android:src="@drawable/ic_rounded_square_midnight_100"
+                android:tag="25-25-112" />
+
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:onClick="colorPress"
+                android:src="@drawable/ic_rounded_square_pink_100"
+                android:tag="255-60-200" />
+        </TableRow>
+        
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="20dp" >
+
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:onClick="colorPress"
+                android:src="@drawable/ic_rounded_square__9acd32_100"
+                android:tag="154-205-50" />
+
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:onClick="colorPress"
+                android:src="@drawable/ic_rounded_square__d2691e_100"
+                android:tag="210-105-30" />
+
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:onClick="colorPress"
+                android:src="@drawable/ic_rounded_square__f08080_100"
+                android:tag="240-128-128" />
+
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:onClick="colorPress"
+                android:src="@drawable/ic_rounded_square__fedabe_100"
+                android:tag="254-218-190" />
+        </TableRow>
+        
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="20dp" >
+
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:onClick="colorPress"
+                android:src="@drawable/ic_rounded_square__4a766e_100"
+                android:tag="74-118-110" />
+
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:onClick="colorPress"
+                android:src="@drawable/ic_rounded_square__7f00ff_100"
+                android:tag="127-0-255" />
+
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:onClick="colorPress"
+                android:src="@drawable/ic_rounded_square__008080_100"
+                android:tag="0-128-128" />
+
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:onClick="colorPress"
+                android:src="@drawable/ic_rounded_square__ee3b3b_100"
+                android:tag="138-59-59" />
+        </TableRow>
+
+
+    </TableLayout>
 
 </LinearLayout>
