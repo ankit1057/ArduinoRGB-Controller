@@ -3,6 +3,10 @@ package dk.cmol.arduinorgb_controller;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
@@ -17,7 +21,8 @@ import android.widget.Toast;
 
 public class ArduinoRGBActivity extends FragmentActivity implements
 		SliderFragment.ToolbarListener,
-		android.widget.PopupMenu.OnMenuItemClickListener {
+		android.widget.PopupMenu.OnMenuItemClickListener,
+		SensorEventListener{
 
 	// Setting vars
 	public boolean lamp_toggle[] = { false, false, false, false };
@@ -136,5 +141,28 @@ public class ArduinoRGBActivity extends FragmentActivity implements
 		Intent intent = new Intent(this, SettingsActivity.class);
 		startActivity(intent);
 		return false;
+	}
+	
+	@Override
+	public void onAccuracyChanged(Sensor arg0, int arg1) {
+		// Do nothing.
+	}
+
+	@Override
+	public void onSensorChanged(SensorEvent event) {
+		// if sensor is unreliable, return void
+		if (event.accuracy == SensorManager.SENSOR_STATUS_UNRELIABLE) {
+			return;
+		}
+		
+		// else it will output the Roll, Pitch and Yawn values
+		String cols = Integer.toString(Math.abs((int)(event.values[2]/90.0*255.0))) + "-"
+				+ Integer.toString(Math.abs((int)(event.values[1]/180.0*255.0))) + "-"
+				+ Integer.toString(Math.abs((int)(event.values[0]/360.0*255.0)));
+		
+		Log.i("Gyro",cols);
+		
+		boolean[] lps = {true,true,true,true};
+		sock.writeMessage(lp.set(lps, cols));
 	}
 }

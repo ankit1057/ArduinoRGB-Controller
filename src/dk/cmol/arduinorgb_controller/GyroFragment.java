@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-public class GyroFragment extends Fragment implements SensorEventListener, OnClickListener {
+public class GyroFragment extends Fragment implements OnClickListener {
 	// a TextView
 	private TextView tv;
 	private ToggleButton btn;
@@ -36,32 +36,12 @@ public class GyroFragment extends Fragment implements SensorEventListener, OnCli
 		return rootView;
 	}
 
-
-	@Override
-	public void onAccuracyChanged(Sensor arg0, int arg1) {
-		// Do nothing.
-	}
-
-	@Override
-	public void onSensorChanged(SensorEvent event) {
-		// if sensor is unreliable, return void
-		if (event.accuracy == SensorManager.SENSOR_STATUS_UNRELIABLE) {
-			return;
-		}
-
-		// else it will output the Roll, Pitch and Yawn values
-		tv.setText("Orientation X (Roll) :" + Double.toString((event.values[2]/90.0*255.0))
-				+ "\n" + "Orientation Y (Pitch) :"
-				+ Double.toString(event.values[1]/180.0*255.0) + "\n"
-				+ "Orientation Z (Yaw) :" + Double.toString(event.values[0]/360.0*255.0));
-	}
-
 	@Override
 	public void onClick(View v) {
 		if (sensor) {
-			sManager.unregisterListener(this);
+			sManager.unregisterListener((SensorEventListener)getActivity());
 		} else {
-			sManager.registerListener(this,
+			sManager.registerListener((SensorEventListener)getActivity(),
 					sManager.getDefaultSensor(Sensor.TYPE_ORIENTATION),
 					SensorManager.SENSOR_DELAY_FASTEST);
 		}
