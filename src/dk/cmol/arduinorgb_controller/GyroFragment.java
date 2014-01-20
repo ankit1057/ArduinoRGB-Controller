@@ -15,7 +15,6 @@ import android.widget.ToggleButton;
 
 public class GyroFragment extends Fragment implements OnClickListener {
 	// a TextView
-	private TextView tv;
 	private ToggleButton btn;
 	// the Sensor Manager
 	private SensorManager sManager;
@@ -28,7 +27,6 @@ public class GyroFragment extends Fragment implements OnClickListener {
 				false);
 
 		sManager = (SensorManager) getActivity().getSystemService(getActivity().SENSOR_SERVICE);
-		tv = (TextView) rootView.findViewById(R.id.gyroText);
 		
 		btn = (ToggleButton) rootView.findViewById(R.id.gyroButton);
 		btn.setOnClickListener((OnClickListener) this);
